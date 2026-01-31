@@ -1,0 +1,9 @@
+{
+  "name": "logix",
+  "version": "1.0.0",
+  "description": "Logix - IA segura com DeepSeek para todos os tipos de análise",
+  "scripts": {
+    "start": "cd api && node server.js",
+    "api": "cd api && node server.js"
+  }
+}

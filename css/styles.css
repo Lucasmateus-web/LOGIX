@@ -74,7 +74,9 @@ header {
 
 .input-container {
     display: flex;
-    background: rgba(15, 15, 15, 0.8);;
+    flex-wrap: wrap;
+    align-items: center;
+    background: rgba(15, 15, 15, 0.8);
     padding: 10px;
     margin: 35px;
     border-radius: 12px;
@@ -549,7 +551,7 @@ border-color: rgba(255,255,255,0.3);
 
 .welcome-fade-out {
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 2s ease;
     pointer-events: none;
 }
 
@@ -570,6 +572,42 @@ border-color: rgba(255,255,255,0.3);
     border-radius: 18px 18px 2px 18px;
     max-width: 75%;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message-user-attachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.message-user-attachment-img {
+    max-width: 200px;
+    max-height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.message-user-attachment-file {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    font-size: 0.85rem;
+}
+
+.message-user-attachment-file i {
+    color: var(--cor-primaria, #00fbff);
+}
+
+.message-user-text {
+    word-break: break-word;
 }
 
 .message-logix {
@@ -668,16 +706,11 @@ border-color: rgba(255,255,255,0.3);
 
 .profile-modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    background: #1a1a1a;
-    padding: 30px;
-    border-radius: 20px;
+    inset: 0;
     z-index: 10001;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     
     opacity: 0;
     visibility: hidden;
@@ -689,13 +722,25 @@ border-color: rgba(255,255,255,0.3);
     visibility: visible;
 }
 
+.profile-modal.active .profile-card-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.profile-card-content {
+    position: relative;
+    z-index: 10002;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
 .modal-overlay-perfil {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(5px);
-    z-index: 10000;
-    display: none;
+    z-index: 10001;
 }
 
 .typing-container {
@@ -742,7 +787,6 @@ border-color: rgba(255,255,255,0.3);
 }
 
 
-/* --- CONTAINER DA ANIMAÇÃO --- */
 .swim-container {
     position: relative;
     width: 48px; /* Tamanho do círculo */
@@ -752,7 +796,6 @@ border-color: rgba(255,255,255,0.3);
     justify-content: center;
 }
 
-/* --- CÍRCULO GRADIENTE GIRATÓRIO (ESTILO GEMINI) --- */
 .gradient-ring {
     position: absolute;
     width: 100%;
@@ -816,4 +859,735 @@ border-color: rgba(255,255,255,0.3);
     100% {
         background-position: 200% center;
     }
+}
+
+
+.btn-social-google {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px;
+}
+
+/* --- Estilos do Perfil --- */
+.profile-card-content {
+    max-width: 400px;
+    width: 90%;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.profile-info .email {
+    width: 100%;
+    margin: 0;
+}
+
+.edit-profile {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.user-profile-header {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.user-profile-header:hover {
+    transform: translateY(-2px);
+}
+
+.user-profile-header:hover img {
+    box-shadow: 0 0 15px var(--cor-primaria, #00fbff);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* --- Mensagem de Boas-Vindas --- */
+.welcome-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 30px 0;
+    padding: 30px;
+    animation: slideInFadeModern 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    animation-fill-mode: forwards;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.welcome-message.fade-out {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    pointer-events: none;
+}
+
+@keyframes slideInFadeModern {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+    }
+    60% {
+        transform: translateY(5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.welcome-icon {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+.shark-welcome {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 15px var(--cor-primaria, #00fbff)) drop-shadow(0 0 30px var(--cor-secundaria, #a155ff));
+    animation: pulseGlowModern 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlowModern {
+    0%, 100% {
+        filter: drop-shadow(0 0 15px var(--cor-primaria, #00fbff)) drop-shadow(0 0 30px var(--cor-secundaria, #a155ff));
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        filter: drop-shadow(0 0 25px var(--cor-primaria, #00fbff)) drop-shadow(0 0 50px var(--cor-secundaria, #a155ff));
+        transform: scale(1.1) rotate(-5deg);
+    }
+    50% {
+        filter: drop-shadow(0 0 30px var(--cor-primaria, #00fbff)) drop-shadow(0 0 60px var(--cor-secundaria, #a155ff));
+        transform: scale(1.15) rotate(5deg);
+    }
+    75% {
+        filter: drop-shadow(0 0 25px var(--cor-primaria, #00fbff)) drop-shadow(0 0 50px var(--cor-secundaria, #a155ff));
+        transform: scale(1.1) rotate(-3deg);
+    }
+}
+
+.welcome-text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.welcome-greeting {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #ffffff 0%, var(--cor-primaria, #00fbff) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInTextModern 1s ease-out 0.4s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    letter-spacing: 1px;
+    text-shadow: 0 0 30px rgba(0, 251, 255, 0.5);
+}
+
+.welcome-question {
+    color: var(--cor-primaria, #00fbff);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    animation: fadeInTextModern 1s ease-out 0.7s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 20px var(--cor-primaria, #00fbff);
+}
+
+@keyframes fadeInTextModern {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px) scale(0.9);
+    }
+    60% {
+        transform: translateX(5px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* --- Estilos do Histórico --- */
+.historico-lista {
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 20px 0;
+}
+
+.historico-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.historico-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--cor-primaria, #00fbff);
+    transform: translateX(5px);
+}
+
+.historico-titulo {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.historico-data {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* --- Estilos da Ajuda --- */
+.ajuda-conteudo {
+    margin: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.ajuda-passo {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--cor-primaria, #00fbff);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.ajuda-passo h3 {
+    color: var(--cor-primaria, #00fbff);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ajuda-passo p {
+    color: #ccc;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- Estilos das Configurações --- */
+.config-opcoes {
+    margin: 20px 0;
+}
+
+.config-item {
+    margin-bottom: 25px;
+}
+
+.config-item label {
+    display: block;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333;
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background: linear-gradient(135deg, var(--cor-primaria, #00fbff), var(--cor-secundaria, #a155ff));
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.theme-colors {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.theme-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+    border-color: white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.theme-btn.active {
+    border-color: white;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+/* --- Tema Claro (compatível com todas as cores do tema) --- */
+body.tema-claro {
+    background: #f0f2f5;
+    --texto-principal: #1a1a1a;
+    --texto-secundario: #4a4a4a;
+    --texto-muted: #666;
+    --fundo-card: #ffffff;
+    --fundo-input: rgba(0, 0, 0, 0.04);
+    --borda-input: rgba(0, 0, 0, 0.12);
+    --fundo-sidebar: rgba(255, 255, 255, 0.98);
+    --fundo-mensagem-user: #e8eaed;
+    --sombra-clara: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+body.tema-claro,
+body.tema-claro * {
+    font-family: "Google Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+body.tema-claro header {
+    background: linear-gradient(to bottom, var(--fundo-card, #fff), transparent);
+}
+
+body.tema-claro header h3 {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .enter {
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)) !important;
+}
+
+body.tema-claro .new-account {
+    color: var(--texto-principal);
+    border-color: var(--borda-input);
+    background: transparent;
+}
+
+body.tema-claro .new-account:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--texto-principal);
+}
+
+body.tema-claro .input-container {
+    background: var(--fundo-card);
+    border: 1px solid var(--borda-input);
+    border-top-color: var(--cor-primaria);
+    box-shadow: var(--sombra-clara);
+}
+
+body.tema-claro .text-input {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .text-input::placeholder {
+    color: var(--texto-muted);
+}
+
+body.tema-claro .send-btn,
+body.tema-claro .files-button {
+    color: var(--texto-muted);
+}
+
+body.tema-claro .send-btn:hover,
+body.tema-claro .files-button:hover {
+    color: var(--cor-primaria);
+}
+
+body.tema-claro .message-user {
+    background: var(--fundo-mensagem-user);
+    color: var(--texto-principal);
+}
+
+body.tema-claro .message-user-attachment-img {
+    border-color: var(--borda-input);
+}
+
+body.tema-claro .message-user-attachment-file {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--texto-principal);
+}
+
+body.tema-claro .message-logix .logix-bubble {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .login-card,
+body.tema-claro .card-login,
+body.tema-claro .profile-card-content {
+    background-color: var(--fundo-card);
+    border: 1px solid var(--borda-input);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+body.tema-claro .modal-header h2,
+body.tema-claro .header-modal h2 {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .modal-header p,
+body.tema-claro .header-modal p {
+    color: var(--texto-secundario);
+}
+
+body.tema-claro .email,
+body.tema-claro .senha {
+    background: var(--fundo-input);
+    border: 1px solid var(--borda-input);
+    color: var(--texto-principal);
+}
+
+body.tema-claro .email::placeholder,
+body.tema-claro .senha::placeholder {
+    color: var(--texto-muted);
+}
+
+body.tema-claro .btn-for {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: #fff;
+    border: none;
+}
+
+body.tema-claro .btn-for:hover {
+    opacity: 0.9;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+body.tema-claro .sidebar {
+    background: var(--fundo-sidebar);
+    border-right: 1px solid var(--borda-input);
+}
+
+body.tema-claro .nav-item {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .nav-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--cor-primaria);
+}
+
+body.tema-claro .nav-item.active {
+    background: rgba(var(--cor-primaria-rgb, 0, 251, 255), 0.12);
+    color: var(--cor-primaria);
+    border-color: rgba(var(--cor-primaria-rgb, 0, 251, 255), 0.25);
+}
+
+body.tema-claro .main-list {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .historico-item {
+    background: var(--fundo-input);
+    border: 1px solid var(--borda-input);
+}
+
+body.tema-claro .historico-item:hover {
+    border-color: var(--cor-primaria);
+}
+
+body.tema-claro .historico-titulo {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .historico-data {
+    color: var(--texto-muted);
+}
+
+body.tema-claro .config-item label {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .toggle-container {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .slider {
+    background-color: #ccc;
+}
+
+body.tema-claro .ajuda-passo {
+    background: var(--fundo-input);
+    border-left-color: var(--cor-primaria);
+}
+
+body.tema-claro .ajuda-passo h3 {
+    color: var(--cor-primaria);
+}
+
+body.tema-claro .ajuda-passo p {
+    color: var(--texto-secundario);
+}
+
+body.tema-claro .typing-bubble {
+    background: var(--fundo-mensagem-user);
+    border-color: var(--borda-input);
+}
+
+body.tema-claro .thinking-text-shimmer {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .welcome-greeting,
+body.tema-claro .welcome-question {
+    -webkit-text-fill-color: initial;
+    color: var(--texto-principal);
+}
+
+body.tema-claro .welcome-question {
+    color: var(--cor-primaria);
+}
+
+body.tema-claro footer {
+    color: var(--texto-muted);
+}
+
+body.tema-claro .user-profile-header p,
+body.tema-claro .user-profile-header span {
+    color: var(--texto-principal);
+}
+
+body.tema-claro .attachments-preview {
+    background: var(--fundo-input);
+    border: 1px solid var(--borda-input);
+}
+
+body.tema-claro .attachment-chip {
+    background: var(--fundo-mensagem-user);
+    color: var(--texto-principal);
+    border-color: var(--borda-input);
+}
+
+/* --- Variáveis CSS para Temas de Cores --- */
+:root {
+    --cor-primaria: #00fbff;
+    --cor-secundaria: #a155ff;
+}
+
+[data-tema="purple"] {
+    --cor-primaria: #a155ff;
+    --cor-secundaria: #ff00ff;
+}
+
+[data-tema="green"] {
+    --cor-primaria: #00ff88;
+    --cor-secundaria: #00fbff;
+}
+
+[data-tema="orange"] {
+    --cor-primaria: #ff6b00;
+    --cor-secundaria: #ff00ff;
+}
+
+[data-tema="blue"] {
+    --cor-primaria: #0066ff;
+    --cor-secundaria: #00fbff;
+}
+
+header .enter {
+    background: transparent;
+}
+
+.nav-item.active {
+    background: rgba(var(--cor-primaria-rgb, 0, 251, 255), 0.1);
+    color: var(--cor-primaria);
+    border-color: rgba(var(--cor-primaria-rgb, 0, 251, 255), 0.2);
+}
+
+.nav-item:hover {
+    color: var(--cor-primaria);
+}
+
+.historico-item:hover {
+    border-color: var(--cor-primaria);
+}
+
+.ajuda-passo {
+    border-left-color: var(--cor-primaria);
+}
+
+.ajuda-passo h3 {
+    color: var(--cor-primaria);
+}
+
+input:checked + .slider {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+}
+
+/* --- Anexos (preview) --- */
+.attachments-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    min-height: 0;
+    max-height: 80px;
+    overflow-y: auto;
+    width: 100%;
+    order: -1;
+}
+
+.attachments-preview:empty {
+    display: none;
+}
+
+.attachment-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #ccc;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.attachment-chip i {
+    flex-shrink: 0;
+    color: var(--cor-primaria);
+}
+
+.attachment-chip .remove-attachment {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 0 4px;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.attachment-chip .remove-attachment:hover {
+    color: #ff6b6b;
+}
+
+/* --- Botão enviar: ícone muda para ampulheta ao enviar --- */
+.send-btn.sending {
+    pointer-events: none;
+}
+
+.send-btn.sending i {
+    animation: hourglassPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes hourglassPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+/* --- Histórico: botão excluir --- */
+.historico-item-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.historico-item {
+    flex: 1;
+}
+
+.btn-excluir-chat {
+    flex-shrink: 0;
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #dc3545;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.btn-excluir-chat:hover {
+    background: rgba(220, 53, 69, 0.4);
+}
+
+body.tema-claro .btn-excluir-chat {
+    color: #c82333;
+    border-color: #dc3545;
+}
+
+body.tema-claro .btn-excluir-chat:hover {
+    background: rgba(220, 53, 69, 0.15);
 }
